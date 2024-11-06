@@ -1,39 +1,30 @@
-﻿#Edit the 8th to 12th line code before upload to gihub
 # Import necessary libraries
 import streamlit as st
 import seaborn as sns
 import plotly.express as px
 import pandas as pd
 
-
-# --- Title and Introduction ---
+# --- App Title ---
+st.set_page_config(page_title="Interactive Visualizations", layout="wide")
 st.title("Interactive Visualizations with Plotly and Streamlit")
+st.markdown("### An engaging workshop for visualization skills with Plotly and Streamlit")
 
+# --- Sidebar for User Input ---
+st.sidebar.header("Workshop Details")
+name = st.sidebar.text_input("Name:", "SHRUTI ROY")
+usn = st.sidebar.text_input("USN:", "45")
+instructor_name = st.sidebar.text_input("Instructor:", "SOCSE")
 
-# --- Input for Author Information ---
-st.sidebar.header("Visualization skill workshop - Plotly")
-name = st.sidebar.text_input("SHRUTI ROY")
-usn = st.sidebar.text_input("45")
-instructor_name = st.sidebar.text_input("SOCSE")
+# --- Load and Display Dataset ---
+tips = sns.load_dataset('tips')
+st.write("### Dataset Overview", tips.head())
 
-
-
-# --- Load Dataset ---
-tips = sns.load_dataset('tips')  # Loading the tips dataset
-
-
-# Display the first few rows of the dataset
-st.write("## Dataset Overview")
-st.write(tips.head())
-
-
-# --- Task 2: Interactive Bar Chart ---
-st.subheader("Task 2: Bar Chart - Average Tip by Day")
-# Bar Chart: Average Tip by Day with color for each day
-fig2 = px.bar(
+# --- Interactive Bar Chart ---
+st.subheader("Bar Chart - Average Tip by Day")
+fig = px.bar(
     tips, x='day', y='tip', color='day',
     title='Average Tip by Day',
     labels={'tip': 'Average Tip ($)', 'day': 'Day of the Week'},
     template='plotly_white'
 )
-st.plotly_chart(fig2)  # Display the chart in Streamlit
+st.plotly_chart(fig, use_container_width=True)
